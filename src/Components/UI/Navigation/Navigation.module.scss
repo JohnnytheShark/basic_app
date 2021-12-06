@@ -1,0 +1,91 @@
+$commonFont: 'Francois One', sans-serif;
+
+nav{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color:rgb(10, 19, 18);
+    .normallist{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: $commonFont;
+        list-style-type: none;
+    }
+    li{
+        margin: 30px;
+    }
+    a{
+        font-size: 2rem;
+        text-decoration: none;
+        color: wheat;
+        &:hover{
+            color: rgb(28, 4, 117);
+        }
+    }
+    .BurgerIcon{
+        display: none;
+    }
+
+}
+@media(min-width: 769px){
+    .mobileList{
+        list-style-type: none;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        a{
+            text-decoration: none;
+            padding: 10px;
+            margin: 5px;
+            color: rgb(8, 14, 15);
+            font-size: 20px;
+            &:hover{
+                color: rgb(248, 247, 247);
+            }
+        }
+    }
+}
+
+@media (max-width: 768px){
+    nav{
+        background-color: rgb(0, 0, 0);
+        .normallist{
+            display: none;
+
+        }
+        .BurgerIcon{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            display: block;
+            cursor: pointer;
+            padding: 10px;
+            &:hover,
+            &:active
+            &:focus{
+                background-color:rgb(0, 0, 0);
+                border-radius: 10px;
+            }
+        }
+    }
+    .mobileList{
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        a{
+            text-decoration: none;
+            padding: 10px;
+            margin: 5px;
+            color: rgb(3, 5, 5);
+            font-size: 30px;
+            &:hover{
+                color: rgb(255, 255, 255);
+            }
+        }
+    }
+}
