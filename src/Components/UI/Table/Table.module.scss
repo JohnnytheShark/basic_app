@@ -10,7 +10,14 @@
 [role="region"][aria-labelledby][tabindex]:focus{
     outline: .1em solid rgba(239, 222, 222, 0.1);
 }
-
+.active{
+    background-color: #027b75;
+    color: white;
+    td{
+        background-color: #027b75;
+        color: white;   
+    }
+}
 .table{
     border: none;
     border-collapse: collapse;
@@ -48,10 +55,7 @@
         background-color: rgb(254, 210, 114); 
       }
 }
-.active{
-    background-color: #027b75;
-    color:#ffffff;
-}
+
 
 @media (max-width: 600px){
     .TableContainer{
