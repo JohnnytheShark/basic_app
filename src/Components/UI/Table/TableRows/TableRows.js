@@ -43,28 +43,28 @@ const TableRows = (props)=>{
                 for (let i = 0; i< props.Data.length; i++){
                     let values = Object.values(props.Data[i]);
                     let mapped = values.map((element,index)=><td key={index}>{element||0}</td>)
-                    items.push(<tr className={active[i] == true ? `${styles.active}` : ""} onClick={()=>{updateRowStyle(i); props.passDownFunction(props.Data[i])}} key={i}>{mapped}</tr>);
+                    items.push(<tr className={active[i] == true ? `${styles.active}` : ""} onClick={()=>{updateRowStyle(i); props.passDownFunction ? props.passDownFunction(props.Data[i]) : void(0)}} key={i}>{mapped}</tr>);
                 }
                 updateNewArray(items);
             }
             else if (props.Data.length == 1 && props.Key == null){
                 let values = Object.values(props.Data[0]);
                 let mapped = values.map((element,index)=><td key={index}>{element||0}</td>)
-                updateNewArray(<tr onClick={()=>{props.passDownFunction(props.Data[0])}}>{mapped}</tr>);
+                updateNewArray(<tr onClick={()=>{props.passDownFunction ? props.passDownFunction(props.Data[0]) : void(0)}}>{mapped}</tr>);
             }
             else if (props.Data.length > 1 && props.Key != null){
                 let items = []
                 for (let i = 0; i < props.Data.length;i++ ){
                     let values = Object.values(props.Data[i][props.Key]);
                     let mapped = values.map((element,index)=><td key={index}>{element}</td>)
-                    items.push(<tr onClick={()=>{updateRowStyle(i); props.passDownFunction(props.Data[i])}}>{mapped}</tr>)
+                    items.push(<tr onClick={()=>{updateRowStyle(i);props.passDownFunction ? props.passDownFunction(props.Data[i]) : void(0)}}>{mapped}</tr>)
                 }
                 updateNewArray(items);
             }
             else if (props.Data.length == 1 && props.Key != null){
                 let values = Object.values(props.Data[0][props.Key]);
                 let mapped = values.map((element,index)=><td key={index}>{element}</td>)
-                updateNewArray(<tr className={active[i] == true ? `${styles.active}`:""} onClick={()=>{props.passDownFunction(props.Data[0][props.Key])}}>{mapped}</tr>);
+                updateNewArray(<tr className={active[i] == true ? `${styles.active}`:""} onClick={()=>{ props.passDownFunction ? props.passDownFunction(props.Data[0][props.Key]) : void(0)}}>{mapped}</tr>);
             }
         }
     },[active]);
