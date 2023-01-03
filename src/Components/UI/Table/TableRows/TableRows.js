@@ -22,11 +22,11 @@ const TableRows = ({Type,Data,Key,passDownFunction})=>{
         if (Type === 'Body'){
             updateSelection(rowEnumerator(Data));
         }
-    },[]);
+    },[Data]);
 
     const updateRowStyle=(i)=>{
         let value = !active[i];
-        console.log(`${i},${value}`);
+        // console.log(`${i},${value}`);
         updateSelection({...active,[i]:value});
     }
     const rowEnumerator= (dataSet) =>{
@@ -38,39 +38,43 @@ const TableRows = ({Type,Data,Key,passDownFunction})=>{
     }
 
     useEffect(()=>{
-        if (Data.length > 1 && Key == null && Type === 'Body'){
-            let items = [];
-            for (let i = 0; i< Data.length; i++){
-                let values = Object.values(Data[i]);
-                let mapped = values.map((element,index)=><td key={index} onClick={e=>passDownFunction ? passDownFunction : void(0)}>{element||0}</td>)
-                items.push(<tr className={active[i] == true ? `${styles.active}` : ""} onClick={()=>updateRowStyle(i)} key={i}>{mapped}</tr>);
+        if (Type === 'Body'){
+            if (Data.length > 1 && Key == null){
+                let items = [];
+                for (let i = 0; i< Data.length; i++){
+                    let values = Object.values(Data[i]);
+                    let mapped = values.map((element,index)=><td key={index} onClick={e=>passDownFunction ? passDownFunction : void(0)}>{element||0}</td>)
+                    items.push(<tr className={active[i] == true ? `${styles.active}` : ""} onClick={()=>updateRowStyle(i)} key={i}>{mapped}</tr>);
+                }
+                updateNewArray(items);
             }
-            updateNewArray(items);
-        }
-        else if (Data.length == 1 && Key == null && Type === 'Body'){
-            let values = Object.values(Data[0]);
-            let mapped = values.map((element,index)=><td key={index}>{element||0}</td>)
-            updateNewArray(<tr onClick={e=>passDownFunction ? passDownFunction : void(0)}>{mapped}</tr>);
-        }
-        else if (Data.length > 1 && Key != null && Type === 'Body'){
-            let items = []
-            for (let i = 0; i < Data.length;i++ ){
-                let values = Object.values(Data[i][Key]);
+            else if (Data.length == 1 && Key == null){
+                let values = Object.values(Data[0]);
+                let mapped = values.map((element,index)=><td key={index}>{element||0}</td>)
+                updateNewArray(<tr onClick={e=>passDownFunction ? passDownFunction : void(0)}>{mapped}</tr>);
+            }
+            else if (Data.length > 1 && Key != null){
+                let items = []
+                for (let i = 0; i < Data.length;i++ ){
+                    let values = Object.values(Data[i][Key]);
+                    let mapped = values.map((element,index)=><td key={index}>{element}</td>)
+                    items.push(<tr onClick={e=>passDownFunction ? passDownFunction : void(0)}>{mapped}</tr>)
+                }
+                updateNewArray(items);
+            }
+            else if (Data.length == 1 && Key != null){
+                let values = Object.values(Data[0][Key]);
                 let mapped = values.map((element,index)=><td key={index}>{element}</td>)
-                items.push(<tr onClick={e=>passDownFunction ? passDownFunction : void(0)}>{mapped}</tr>)
+                updateNewArray(<tr onClick={e=>passDownFunction ? passDownFunction : void(0)}>{mapped}</tr>);
             }
-            updateNewArray(items);
-        }
-        else if (Data.length == 1 && Key != null && Type === 'Body'){
-            let values = Object.values(Data[0][Key]);
-            let mapped = values.map((element,index)=><td key={index}>{element}</td>)
-            updateNewArray(<tr onClick={e=>passDownFunction ? passDownFunction : void(0)}>{mapped}</tr>);
         }
     },[active]);
-
-    let headers = Object.keys(data).length >= 1 && type === "Header" ? Object.keys(data).map((element,index)=><th key={index}>{element.replace(/[A-Z]/g, ' $&').trim().toUpperCase()}</th>):"";
-    let body = key == "" && data.length == 1 ? Object.values(data[0]).map((element,index)=><td key={index}>{element||0}</td>) : data.length > 1 ? [newArray] : "";
-    let tableInformation = type === "Header" ? <thead><tr>{headers}</tr></thead> : type === "Body" ?  <tbody>{body}</tbody> : <tbody><tr>No Data Found</tr></tbody>;
+    let headers = type === "Header" && typeof data == "object" ? Object.keys(data).map((element,index)=><th key={index}>{element.replace(/[A-Z]/g, ' $&').trim().toUpperCase()}</th>):"";
+    let body = <tr><td>No Data Found</td></tr>;
+    if (type === "Body"){
+        body = key == "" && data.length == 1 ? Object.values(data[0]).map((element,index)=><td key={index}>{element||0}</td>) : data.length > 1 ? [newArray] : <tr><td>No Data Found</td></tr>;
+    }
+    let tableInformation = type === "Header" ? <thead><tr>{headers}</tr></thead> : type === "Body" ?  <tbody>{body}</tbody> : <tbody><tr><td>No Data Found</td></tr></tbody>;
     
     let context = loading ?  "" : tableInformation ;
 
