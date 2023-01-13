@@ -5,6 +5,7 @@ import styles from '../Table.module.scss';
  * Component that maps data to either headers or table based on the data coming in
  * @param {*} Props containing either Type, Data, Key, Function to Rows, and row styles
  * @returns Table Headers or Table Rows depending on what is given to it. 
+ * Making Changes to the schema
  */
 const TableRows = (props)=>{
     const [loading,toggleLoading] = useState(true);
